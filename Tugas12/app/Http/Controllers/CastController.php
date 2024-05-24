@@ -19,7 +19,12 @@ class CastController extends Controller
         $request->validate([
             'nama' => 'required|min:6',
             'umur' => 'required',
-            'bio' => 'required'
+            'bio' => 'required',
+        ],
+        [
+            'nama.required' => 'Nama harus diisi minimal 6 huruf',
+            'umur.required' => 'Umur harus diisi angka',
+            'bio.required' => 'Bio harus diisi ',
         ]);
 
         DB::table('cast')->insert([
