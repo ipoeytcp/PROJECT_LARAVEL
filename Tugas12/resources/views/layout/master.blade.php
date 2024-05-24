@@ -19,6 +19,8 @@
 <div class="wrapper">
   <!-- Navbar -->
     @include('partial.nav');
+
+
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -98,7 +100,10 @@
 <script src="{{('/template/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{('/template/dist/js/adminlte.min.js')}}"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @stack('scripts')
+@include('sweetalert::alert')
 </body>
 </html>

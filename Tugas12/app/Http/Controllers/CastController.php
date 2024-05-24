@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+Use Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class CastController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|min:6',
             'umur' => 'required',
             'bio' => 'required'
         ]);
@@ -27,7 +28,7 @@ class CastController extends Controller
             'bio' => $request['bio']
         ]);
 
-        return redirect('/cast');
+        return redirect('/cast')->with('toast_success', 'Data Cast Berhasil Ditambahkan!');
     }
 
     public function index()
@@ -35,7 +36,12 @@ class CastController extends Controller
         $cast = DB::table('cast')->get();
         // dd($cast);
 
-        return view('cast.index', ['cast' => $cast] );
+        $title = 'Hapus Data Cast!';
+        $text = "Yakin mau menghapus data cast?";
+        confirmDelete($title, $text);
+        return view('cast.index', compact('cast'));
+
+        //return view('cast.index', ['cast' => $cast] );
 
     }
 
@@ -69,12 +75,12 @@ class CastController extends Controller
                 ]
         );
 
-        return redirect('/cast');
+        return redirect('/cast')->with('toast_success', 'Data Cast Berhasil Diupdate!');
     }
 
     public function destroy($id)
     {
-        DB::table('cast')->where('id', $id)->delete();
+        DB::table('cast')->where('id', '=', $id)->delete();
 
         return redirect('/cast');
     }
