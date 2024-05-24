@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('judul')
-   Tampil Data Cast
+   Tampil Data Genre
 @endsection
 
 @push('scripts')
@@ -20,33 +20,31 @@
 
 @section('content')
 
-    <a href="/cast/create" class="btn btn-primary btn-sm mb-3">Tambah Data</a>
+    <a href="/genre/creategenre" class="btn btn-primary btn-sm mb-3">Tambah Data</a>
 
     <table id="example1" class="table table-bordered table-striped">
         <thead>
           <tr>
             <th scope="col" class="text-center">No</th>
             <th scope="col" class="text-center">Nama</th>
-            <th scope="col" class="text-center">Umur</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
-            @forelse ($cast as $key => $value)
+            @forelse ($genre as $key => $value)
                 <tr>
                     <td class="text-center">{{$key + 1}}</td>
                     <td>{{$value->nama}}</td>
-                    <td class="text-center">{{$value->umur}}</td>
                     <td>
 
-                        <form action="/cast/{{$value->id}}" method="POST" class="text-center">
+                        <form action="/genre/{{$value->id}}" method="POST" class="text-center">
                             @csrf
                             @method('DELETE')
-                            <a href="/cast/{{$value->id}}" class="btn btn-info btn-sm">Detail</a>
-                            <a href="/cast/{{$value->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/genre/{{$value->id}}" class="btn btn-info btn-sm">Detail</a>
+                            <a href="/genre/{{$value->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
                             {{-- /<input type="submit" value="Delete" class="btn btn-danger btn-sm show_confirm" id="delete" > --}}
 
-                            <a href="/cast/{{$value->id}}" class="btn btn-danger btn-sm" data-confirm-delete="true">Hapus</a>
+                            <a href="/genre/{{$value->id}}" class="btn btn-danger btn-sm" data-confirm-delete="true">Hapus</a>
 
 
                         </form>
