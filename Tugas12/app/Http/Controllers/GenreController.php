@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Genre;
 
 class GenreController extends Controller
 {
@@ -44,7 +45,7 @@ class GenreController extends Controller
 
     public function showgenre($id)
     {
-        $genre = DB::table('genre')->where('id', $id)->first();
+        $genre = Genre::find($id);
         return view('genre.detailgenre', ['genre' => $genre]);
     }
 

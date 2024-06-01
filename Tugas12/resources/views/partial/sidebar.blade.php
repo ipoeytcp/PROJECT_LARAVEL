@@ -1,11 +1,19 @@
 <div class="sidebar">
     <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      @auth
       <div class="image">
         <img src="{{asset('/template/dist/img/ipoey.png')}}" class="img-circle elevation-2" alt="User Image">
       </div>
+      @endauth
+
       <div class="info">
-        <a href="#" class="d-block">Syaiful Hadi</a>
+        @auth
+            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+        @endauth
+        @guest
+            <a href="#" class="d-block">Anda Belum Login</a>
+        @endguest
       </div>
     </div>
 
@@ -35,72 +43,71 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Halaman
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/form" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Register</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/data-table" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Table</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/table" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Table</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          {{-- TUGAS LARAVEL MULAI DARI CRUD --}}
+
+        @auth
+                <li class="nav-item">
+                    <a href="/cast" class="nav-link">
+                    <i class="fas fa-restroom nav-icon"></i>
+                    <p>Cast</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/genre" class="nav-link">
+                    <i class="fas fa-clone nav-icon"></i>
+                    <p>Genre</p>
+                    </a>
+                </li>
+          @endauth
+
+
           <li class="nav-item">
+            <a href="/film" class="nav-link">
+              <i class="fas fa-film nav-icon"></i>
+              <p>Film</p>
+            </a>
+          </li>
+
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="fas fa-edit nav-icon"></i>
+              <p>Kritik</p>
+            </a>
+          </li> --}}
+
+          @guest
+          <li class="nav-item bg-info">
+            <a href="/login" class="nav-link">
+              <i class="fas fa-sign-in-alt nav-icon"></i>
+              <p>Login</p>
+            </a>
+          </li>
+          @endguest
+
+          @auth
+
+          <li class="nav-item">
+            <a href="/profile" class="nav-link">
+              <i class="nav-icon fas fa-user-alt"></i>
               <p>
-                Review Film
-                <i class="right fas fa-angle-left"></i>
+                Profile
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/cast" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cast</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/genre" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Genre</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Film</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kritik</p>
-                </a>
-              </li>
-            </ul>
           </li>
-      </ul>
+
+            <li class="nav-item bg-danger" >
+                <a class="nav-link " href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </li>
+          @endauth
+        </ul>
     </nav>
     <!-- /.sidebar-menu -->
   </div>

@@ -12,6 +12,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('/template/dist/css/adminlte.min.css')}}">
 
+
   @stack('styles')
 </head>
 <body class="hold-transition sidebar-mini">

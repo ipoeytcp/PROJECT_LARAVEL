@@ -5,6 +5,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CastController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\FilmController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KritikController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +21,7 @@ use App\Http\Controllers\GenreController;
 |
 */
 
-Route::get('/', [HomeController::class, 'home'] );
+Route::get('/', [HomeController::class, 'utama'] );
 
 Route::get('/form', [AuthController::class, 'register']);
 
@@ -30,6 +34,31 @@ Route::get('/data-table', function(){
 Route::get('/table', function(){
     return view('page.table');
 });
+
+Route::middleware(['auth'])->group(function () {
+
+//GENRE
+//CREATE
+//Form tambah genre
+Route::get('/genre/creategenre', [GenreController::class, 'creategenre']);
+//UNtuk Kirim data ke database tabel genre
+Route::post('genre', [GenreController::class, 'storegenre']);
+
+//READ
+//Tampil Semua Data Genre
+Route::get('/genre', [GenreController::class, 'indexgenre']);
+//Tampil Detail Genre
+Route::get('/genre/{genre_id}', [GenreController::class, 'showgenre']);
+
+//UPDATE
+//Form Update genre
+Route::get('/genre/{genre_id}/edit', [GenreController::class, 'editgenre']);
+//Update data genre ke database berdsarakan ID
+Route::put('/genre/{genre_id}', [GenreController::class, 'updategenre']);
+
+//DELETE
+//Delete data genre berdsarakan ID
+Route::delete('/genre/{genre_id}', [GenreController::class, 'destroygenre']);
 
 //CRUD_CAST
 
@@ -55,25 +84,25 @@ Route::put('/cast/{cast_id}', [CastController::class, 'update']);
 //Delete data cast berdsarakan ID
 Route::delete('/cast/{cast_id}', [CastController::class, 'destroy']);
 
-//GENRE
-//CREATE
-//Form tambah genre
-Route::get('/genre/creategenre', [GenreController::class, 'creategenre']);
-//UNtuk Kirim data ke database tabel genre
-Route::post('genre', [GenreController::class, 'storegenre']);
+//Profile
+Route::resource('profile', ProfileController::class)->only(['index','update']);
 
-//READ
-//Tampil Semua Data Genre
-Route::get('/genre', [GenreController::class, 'indexgenre']);
-//Tampil Detail Genre
-Route::get('/genre/{genre_id}', [GenreController::class, 'showgenre']);
+//Kritik
+Route::post('kritik/{film_id}', [KritikController::class, 'tambah']);
 
-//UPDATE
-//Form Update genre
-Route::get('/genre/{genre_id}/edit', [GenreController::class, 'editgenre']);
-//Update data genre ke database berdsarakan ID
-Route::put('/genre/{genre_id}', [GenreController::class, 'updategenre']);
 
-//DELETE
-//Delete data genre berdsarakan ID
-Route::delete('/genre/{genre_id}', [GenreController::class, 'destroygenre']);
+});
+
+
+
+
+
+
+
+
+//crud FILM
+Route::resource('film', FilmController::class);
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
